@@ -1,0 +1,768 @@
+<!DOCTYPE html><html><head>
+      <title>SGE安装部署完整过程-基于CentOS7</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\guo12\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.13\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="sge安装部署完整过程-基于centos7">SGE安装部署完整过程-基于CentOS7 </h1>
+
+<div class="md-toc">
+<details style="padding:0;;padding-left:0px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#sge安装部署完整过程-基于centos7" class="md-toc-link"><p>SGE安装部署完整过程-基于CentOS7</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#前言" class="md-toc-link">
+            <p>前言</p>
+
+          </a></div><details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#1-系统安装" class="md-toc-link"><p>1 系统安装</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#11-安装控制节点" class="md-toc-link">
+            <p>1.1 安装控制节点</p>
+
+          </a></div><details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#12-安装计算节点" class="md-toc-link"><p>1.2 安装计算节点</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#121-安装计算节点-01" class="md-toc-link">
+            <p>1.2.1 安装计算节点-01</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#122-安装计算节点-02" class="md-toc-link">
+            <p>1.2.2 安装计算节点-02</p>
+
+          </a></div>
+        </div>
+      </details>
+    <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#13-安装投递节点" class="md-toc-link">
+            <p>1.3 安装投递节点</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#14-修改yum源" class="md-toc-link">
+            <p>1.4 修改yum源</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#2-nfs共享存储" class="md-toc-link"><p>2 NFS共享存储</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#21-server端master" class="md-toc-link">
+            <p>2.1&nbsp;Server端（master）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#22-客户端compute-01" class="md-toc-link">
+            <p>2.2 客户端（compute-01）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#24-投递节点" class="md-toc-link">
+            <p>2.4 投递节点</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#3-nisnetwork-information-service安装部署" class="md-toc-link"><p>3 NIS(Network Information Service)安装部署</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#31-server端master" class="md-toc-link">
+            <p>3.1 Server端（master）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#32-客户端compute-01" class="md-toc-link">
+            <p>3.2 客户端（compute-01)</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#33-投递节点" class="md-toc-link">
+            <p>3.3 投递节点</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#4-sge-cluster" class="md-toc-link"><p>4 SGE Cluster</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#41-主控节点安装qmaster" class="md-toc-link">
+            <p>4.1 主控节点安装（qmaster）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#42-执行节点安装compute-01" class="md-toc-link">
+            <p>4.2 执行节点安装（compute-01)</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#43-其他执行节点" class="md-toc-link">
+            <p>4.3 其他执行节点</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#44-投递节点" class="md-toc-link">
+            <p>4.4 投递节点</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#45-qmon设置" class="md-toc-link">
+            <p>4.5 qmon设置</p>
+
+          </a></div>
+        </div>
+      </details>
+    <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#5-测试" class="md-toc-link">
+            <p>5 测试</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#6-讨论" class="md-toc-link">
+            <p>6 讨论</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#7-参考资料" class="md-toc-link">
+            <p>7 参考资料</p>
+
+          </a></div>
+        </div>
+      </details>
+    
+</div>
+<hr>
+<h2 id="前言">前言 </h2>
+<p>把多台服务器组成一个cluster集群（Sun Grid Engine, SGE），把一台电脑上的home文件夹共享给其他服务器（NFS），公用一个home文件夹，进行统一的用户管理（NIS）。</p>
+<p>操作系统镜像选用CentOS-7-x86_64-DVD-2009.iso，在vmware虚拟出来的服务器进行模拟。</p>
+<p>Sun Grid Engine下载地址，<a href="https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/">https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/</a><br>
+sourceforge上也有，下载地址：<a href="https://sourceforge.net/projects/gridengine/files/SGE/releases/8.1.9/">https://sourceforge.net/projects/gridengine/files/SGE/releases/8.1.9/</a><br>
+（后续教程中也有相关内容，不需要提前下载）。</p>
+<hr>
+<h2 id="1-系统安装">1 系统安装 </h2>
+<h3 id="11-安装控制节点">1.1 安装控制节点 </h3>
+<p>1）新建虚拟机</p>
+<p><img src="img/1720709484889.png" alt="1720709484889"></p>
+<p>2）选择对应的操作系统文件</p>
+<p><img src="img/1720709540069.png" alt="1720709540069"></p>
+<p>3）修改为自己定义的系统名称，以区分不同机器</p>
+<p><img src="img/1720709604484.png" alt="1720709604484"></p>
+<p>4）硬盘值修改大一些，不够用的话，后期可以再添加的</p>
+<p><img src="img/1720709624344.png" alt="1720709624344"></p>
+<p>5）网络适配器默认NAT即可，也可设置微桥接模式，只要保证在同一个网段即可（<a href="http://xn--192-eo8e.168.255.xxx">如192.168.255.xxx</a>）</p>
+<p><img src="img/1720709643183.png" alt="1720709643183"></p>
+<p>6）移动光标选择Install CentOS 7，按Enter键</p>
+<p><img src="img/1720709658568.png" alt="1720709658568"></p>
+<p>7）如果有这个提示，按Enter键就可开始安装系统</p>
+<p><img src="img/1720709673469.png" alt="1720709673469"></p>
+<p>8）语言默认英文即可</p>
+<p><img src="img/1720709695909.png" alt="1720709695909"></p>
+<p>9）设置时区</p>
+<p><img src="img/1720709711466.png" alt="1720709711466"></p>
+<p>10）点击中国区域，地址显示shanghai（上海）即可</p>
+<p><img src="img/1720709739619.png" alt="1720709739619"></p>
+<p>11）设置安装选项</p>
+<p><img src="img/1720709765778.png" alt="1720709765778"></p>
+<p>12）安装图形界面，并勾选<strong>Development</strong> 开发工具（<strong>如果你需要用qmon配置管理集群，需要图形界面</strong>）</p>
+<p><img src="img/1720709779090.png" alt="1720709779090"></p>
+<p>13）设置硬盘分区选项</p>
+<p><img src="img/1720709793635.png" alt="1720709793635"></p>
+<p>14）自动配置分区即可，也可以自定义分区</p>
+<p><img src="img/1720709806716.png" alt="1720709806716"></p>
+<p>15）设置KDUMP</p>
+<p><img src="img/1720709820881.png" alt="1720709820881"></p>
+<p>16）关闭kdump</p>
+<p><img src="img/1720709833642.png" alt="1720709833642"></p>
+<p>17）网络设置</p>
+<p><img src="img/1720709848362.png" alt="1720709848362"></p>
+<p>18）打开网络，点击OFF，ON蓝色背景亮起，下边出现IP地址表示已打开网卡（此处也可以自定义网络地址和host name，后边我们还会设置的）</p>
+<p><img src="img/1720709862330.png" alt="1720709862330"></p>
+<p>19）现在我们开始安装，点击Begin Installation</p>
+<p><img src="img/1720709874494.png" alt="1720709874494"></p>
+<p>20）安装过程中，我们现在可以设置root账户的密码</p>
+<p><img src="img/1720709888711.png" alt="1720709888711"></p>
+<p>21）密码自己要记住</p>
+<p><img src="img/1720709901373.png" alt="1720709901373"></p>
+<p>22）安装完点Reboot</p>
+<p><img src="img/1720709914294.png" alt="1720709914294"></p>
+<p>23）重启之后就进入启动界面了，第一项就可以，不用管它</p>
+<p><img src="img/1720709930728.png" alt="1720709930728"></p>
+<p>24）重启后需要让我们接受许可</p>
+<p><img src="img/1720709952695.png" alt="1720709952695"></p>
+<p>25）接受许可</p>
+<p><img src="img/1720709965958.png" alt="1720709965958"></p>
+<p>26）完成配置设置</p>
+<p><img src="img/1720709988014.png" alt="1720709988014"></p>
+<p>27）之后一路NEXT点下去，到这里会让你设置一个普通账户。也可以在前边步骤就添加一个账户</p>
+<p><img src="img/1720710003115.png" alt="1720710003115"></p>
+<p>28）设置一个较为复杂的密码，自己要记住密码</p>
+<p><img src="img/1720710015281.png" alt="1720710015281"></p>
+<p>29）进入桌面后，右键菜单里，点击Open Terminal</p>
+<p><img src="img/1720710027692.png" alt="1720710027692"></p>
+<p>30）切换到root账户,输入对应的密码。输密码不会显示任何东西，你输入前边设置的root对应的密码就可以，输完按Enter键。如果输错了多按一会退格键就可以删了</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">su</span> root
+</code></pre><p><img src="img/1720710053220.png" alt="1720710053220"></p>
+<p>至此，master主机的系统安装完成。</p>
+<h3 id="12-安装计算节点">1.2 安装计算节点 </h3>
+<h4 id="121-安装计算节点-01">1.2.1 安装计算节点-01 </h4>
+<p>1）新建虚拟机</p>
+<p><img src="img/1720710071679.png" alt="1720710071679"></p>
+<p>2）选择同样的操作系统文件</p>
+<p><img src="img/1720710086263.png" alt="1720710086263"></p>
+<p>3）修改文件名为计算节点，我们会有多个计算节点，所以还是编个号吧</p>
+<p><img src="img/1720710097815.png" alt="1720710097815"></p>
+<p>4）硬盘大小我们也设置为40G</p>
+<p><img src="img/1720710111208.png" alt="1720710111208"></p>
+<p>5）网络设置保持与master一致(都是NAT模式，默认就是同一网段）</p>
+<p><img src="img/1720710123180.png" alt="1720710123180"></p>
+<p>6）移动光标选择Install CentOS 7，按Enter键</p>
+<p><img src="img/1720710135085.png" alt="1720710135085"></p>
+<p>7）如果有这个提示，按Enter键就可以</p>
+<p><img src="img/1720710145771.png" alt="1720710145771"></p>
+<p>8）默认英文即可</p>
+<p><img src="img/1720710167052.png" alt="1720710167052"></p>
+<p>9）设置时区</p>
+<p><img src="img/1720710177806.png" alt="1720710177806"></p>
+<p>10）点击中国区域，显示shanghai（上海）即可</p>
+<p><img src="img/1720710188699.png" alt="1720710188699"></p>
+<p>11）设置安装选项</p>
+<p><img src="img/1720710199718.png" alt="1720710199718"></p>
+<p>12）此处选择Compute Node,同时也勾选上Development Tools（开发工具）</p>
+<p><img src="img/1720710212335.png" alt="1720710212335"></p>
+<p>13）设置硬盘分区选项</p>
+<p><img src="img/1720710226679.png" alt="1720710226679"></p>
+<p>14）默认自动分配即可</p>
+<p><img src="img/1720710238149.png" alt="1720710238149"></p>
+<p>15）设置KDUMP</p>
+<p><img src="img/1720710249230.png" alt="1720710249230"></p>
+<p>16）关闭kdump</p>
+<p><img src="img/1720710259778.png" alt="1720710259778"></p>
+<p>17）设置网络</p>
+<p><img src="img/1720710271033.png" alt="1720710271033"></p>
+<p>18）点击OFF后，ON蓝色背景亮起，下边出现IP地址表示已打开网卡</p>
+<p><img src="img/1720710281840.png" alt="1720710281840"></p>
+<p>19）点击Begin Installation，开始安装系统</p>
+<p><img src="img/1720710295129.png" alt="1720710295129"></p>
+<p>20）安装过程中，我们设置root账户的密码</p>
+<p><img src="img/1720710306898.png" alt="1720710306898"></p>
+<p>21）设置root密码，记住牢记。可以和master的密码一样</p>
+<p><img src="img/1720710317607.png" alt="1720710317607"></p>
+<p>22）安装完，点击Reboot（重启）。不需要添加其他账户。</p>
+<p><img src="img/1720710332055.png" alt="1720710332055"></p>
+<p>23）重启之后，输入root账户和对应的密码</p>
+<p><img src="img/1720710344080.png" alt="1720710344080"></p>
+<p>24）显示这个，就是成功进入系统了。至此这台计算节点也安装好了</p>
+<p><img src="img/1720710359543.png" alt="1720710359543"></p>
+<h4 id="122-安装计算节点-02">1.2.2 安装计算节点-02 </h4>
+<p>再建一台计算节点，步骤与compute-01一样，参见1.2.1步骤</p>
+<p><img src="img/1720710372333.png" alt="1720710372333"></p>
+<h3 id="13-安装投递节点">1.3 安装投递节点 </h3>
+<p>与计算节点方法，把特定计算节点设置为投递节点</p>
+<h3 id="14-修改yum源">1.4 修改yum源 </h3>
+<p>查看系统版本</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">cat</span> /etc/redhat-release
+</code></pre><p>返回系统信息，此处以你自己的版本为准</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>CentOS Linux release 7.9.2009 (Core)
+</code></pre><p>对于centos7.9 2009系统，执行以下命令，替换yum源（参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/centos-vault/">资料</a>）</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>sed -e "s|^mirrorlist=|#mirrorlist=|g" \
+    -e "s|^#baseurl=http://mirror.centos.org/centos/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/7.9.2009|g" \
+    -e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/7.9.2009|g" \
+    -i.bak \
+    /etc/yum.repos.d/CentOS-*.repo
+</code></pre><p>更新软件包缓存</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>yum makecache
+</code></pre><h2 id="2-nfs共享存储">2 NFS共享存储 </h2>
+<p>利用nfs，实现在每台服务器拥有同样的目录和文件。</p>
+<p>我们共享两个目录，server端的/home目录，以便每个服务器都有同样的家目录；另一个是/opt/sge用于安装SGE。</p>
+<h3 id="21-server端master">2.1&nbsp;Server端（master） </h3>
+<p>1）关闭防火墙，并禁止开机启动</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>systemctl stop firewalld.service
+systemctl disable firewalld.service
+</code></pre><p>2）关闭selinux，将SELINUX=enable(或enforcing)修改为SELINUX=disable</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/selinux/config
+</code></pre><p><img src="img/1720710407797.png" alt="1720710407797"></p>
+<p>3）重启服务器，selinux不容易直接关闭，重启关闭最有效</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>init <span class="token number">6</span>
+</code></pre><p>4）重启后，在这个界面点击 Not listed？</p>
+<p><img src="img/1720710422949.png" alt="1720710422949"></p>
+<p>5）输入root，以及对应的密码，就可以直接进入root账户。进去之后再次打开terminal界面</p>
+<p><img src="img/1720710434397.png" alt="1720710434397"></p>
+<p>6）在主控节点服务器，即master主机上安装nfs服务，同时需要安装RPC服务。</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token function">install</span> <span class="token parameter variable">-y</span> nfs-utils rpcbind
+</code></pre><p>7）rpcbind开机启动和开启服务</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>systemctl <span class="token builtin class-name">enable</span> rpcbind.service
+systemctl start rpcbind.service
+</code></pre><p>8）查看当前主机的ip地址</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">ifconfig</span>
+</code></pre><p><img src="img/1720712156650.png" alt="1720712156650"></p>
+<p>此处显示ip地址为:192.168.255.131</p>
+<p>9）设置要共享的目录，向地址为192.168.255开头的服务器共享<br>
+（在虚拟机中，NAT网络中的所有主机ip是在一个网段的，看了本机ip，就知道其他主机的ip是什么区段了），根据自己的服务器地址区段进行设置，也可以直接向所有服务器共享，将（192.168.255.0/24）替换成（*），不含括号。</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">mkdir</span> /opt/sge
+<span class="token function">vi</span> /etc/exports
+</code></pre><p>添加以下内容</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>/home *(rw,insecure,no_all_squash,sync,no_root_squash)
+/opt/sge *(rw,insecure,no_all_squash,sync,no_root_squash)
+</code></pre><p>10）nfs开机启动和开启服务</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>systemctl <span class="token builtin class-name">enable</span> nfs
+systemctl start nfs
+</code></pre><p>11）生效export</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>exportfs <span class="token parameter variable">-av</span>
+</code></pre><h3 id="22-客户端compute-01">2.2 客户端（compute-01） </h3>
+<p>1）关闭防火墙</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>systemctl stop firewalld.service
+systemctl disable firewalld.service
+</code></pre><p>2）关闭selinux，将SELINUX=enable(或enforcing)修改为SELINUX=disabled</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/selinux/config
+</code></pre><p><img src="img/1720710472918.png" alt="1720710472918"></p>
+<p>3）重启服务器，selinux不容易直接关闭，重启关闭最有效</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>init <span class="token number">6</span>
+</code></pre><p>4）安装rpcbind和nfs，开机启动和启动服务</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token parameter variable">-y</span> <span class="token function">install</span> nfs-utils rpcbind
+systemctl <span class="token builtin class-name">enable</span> rpcbind.service
+systemctl start rpcbind.service
+systemctl <span class="token builtin class-name">enable</span> nfs
+systemctl start nfs
+</code></pre><p>5）设置自动挂载，tab分隔符，不是空格。其中192.168.255.131是master主机的ip地址，此处替换为你自己的master主机的ip地址</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">mkdir</span> /opt/sge
+<span class="token function">vi</span> /etc/fstab
+</code></pre><p>在原始文件最下边添加</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>192.168.255.131:/home	/home	nfs	defaults	0	0
+192.168.255.131:/opt/sge	/opt/sge	nfs	defaults	0	0
+</code></pre><p>修改后的内容如下所示，<strong>原始内容不要进行任何修改，否则会开不了机，此处一定要写对了</strong></p>
+<p><img src="img/1720712494947.png" alt="1720712494947"></p>
+<p>6）挂载</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">mount</span> <span class="token parameter variable">-a</span>
+</code></pre><p>7）查看是否挂载上</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">df</span> <span class="token parameter variable">-h</span>
+</code></pre><p>可以看到 <code>/home</code>和 <code>/opt/sge</code>都挂载上了</p>
+<p><img src="img/1720712534533.png" alt="1720712534533"></p>
+<h3 id="24-投递节点">2.4 投递节点 </h3>
+<p>投递节点参考客户端进行安装，不再叙述。</p>
+<h2 id="3-nisnetwork-information-service安装部署">3 NIS(Network Information Service)安装部署 </h2>
+<h3 id="31-server端master">3.1 Server端（master） </h3>
+<p>1）安装相关库</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token parameter variable">-y</span> <span class="token function">install</span> ypserv ypbind yp-tools
+</code></pre><p>2）配置NIS domain，增加NISDOMAIN和启用端口，life.com应该也可以替换为其他域名</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/sysconfig/network
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>NISDOMAIN=life.com
+YPSERV_ARGS="-p 1011"
+</code></pre><p>3）开机自动加入NIS域</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/rc.d/rc.local
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>/bin/nisdomain life.com
+</code></pre><p>4）设置NIS服务器访问权限</p>
+<p>编辑NIS配置文件，允许特定的主机访问NIS服务器，可以是特定的ip，也可是特定网段，此处我设置的是所有主机均可访问。</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/ypserv.conf
+</code></pre><p>直接删除最下边一行前边的#即可</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code> * :	*	:	*	:	none
+</code></pre><p><img src="img/1720710562574.png" alt="1720710562574"></p>
+<p>5）让yppasswdd启动在固定端口</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/sysconfig/yppasswdd
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>YPPASSWDD_ARGS="--port 1012"
+</code></pre><p>6）设置开机启动和启动服务，确保先启动rpcbind再启动ypserv</p>
+<p>前边我们已经启动了rpcbind</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>systemctl <span class="token builtin class-name">enable</span> ypserv.service
+systemctl <span class="token builtin class-name">enable</span> yppasswdd.service
+systemctl start ypserv.service
+systemctl start yppasswdd.service
+</code></pre><p>7）建立数据库，使NIS服务器端的用户信息导入。当用户信息更新后，也需要重新执行该命令更新数据库。ctrl+D键结束输入，输入y后按Enter键完成设置。</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>/usr/lib64/yp/ypinit <span class="token parameter variable">-m</span>
+</code></pre><p>8）在server端新增账户或者删除账户或者修改账户信息后，更新NIS账户和资料库</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">make</span> <span class="token parameter variable">-C</span> /var/yp
+<span class="token function">make</span> <span class="token parameter variable">-C</span> /var/yp <span class="token function">passwd</span>
+</code></pre><h3 id="32-客户端compute-01">3.2 客户端（compute-01) </h3>
+<p>1）安装NIS相关库</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token parameter variable">-y</span> <span class="token function">install</span> ypbind yp-tools
+</code></pre><p>2）在网络项加入NIS域</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/sysconfig/network
+</code></pre><p>添加以下内容</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>NISDOMAIN=life.com
+YPSERV_ARGS="-p 1011"
+</code></pre><p>3）开机自动加入NIS域</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/rc.d/rc.local
+</code></pre><p>添加以下内容</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>/bin/nisdomainname life.com
+</code></pre><p>4）修改用户密码的认证顺序文件，用于管理系统中多个配置文件查找的顺序</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/nsswitch.conf
+</code></pre><p>找到这几个开头的，修改后边的内容如下</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>...
+passwd:	files nis sss
+shadow:	files nis sss
+group:	files nis sss
+...
+hosts:	files nis dns
+...
+</code></pre><p>5）修改客户端配置文件，输入NIS服务器信息，替换192.168.255.131为你自己的master主机的ip地址</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/yp.conf
+</code></pre><p>添加以下内容</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>domain life.com server 192.168.255.131
+</code></pre><p>6）修改系统认证文件，启用nis</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/sysconfig/authconfig
+</code></pre><p>找到USENIS这一项，修改no为yes</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>USENIS=yes
+</code></pre><p>7）设置PAM授权，添加nis</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/pad.d/
+<span class="token function">vi</span> /etc/pad.d/system-auth
+</code></pre><p>添加以下内容</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>password sufficient pam_unix.so sha512 shadow nis nullok try_first_pass use_authtok
+</code></pre><p>8）开机启动和启用服务</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>systemctl <span class="token builtin class-name">enable</span> ypbind
+systemctl start ypbind
+</code></pre><h3 id="33-投递节点">3.3 投递节点 </h3>
+<p>投递节点可以作为从服务器，也可以作为客户端。<br>
+此处参考客户端进行安装，不再叙述。</p>
+<h2 id="4-sge-cluster">4 SGE Cluster </h2>
+<h3 id="41-主控节点安装qmaster">4.1 主控节点安装（qmaster） </h3>
+<p>1）修改hostname</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>hostnamectl set-hostname qmaster.local
+</code></pre><p>2）修改hosts文件，添加主控节点、投递节点和计算节点（即qmaster、qsubnode、compute-01、compute-02）的信息</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/hosts
+</code></pre><p>添加以下内容，ip替换你自己对应的ip</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>192.168.255.131 qmaster.local qmaster
+192.168.255.132 qsubnode.local qsubnode
+192.168.255.130 compute01.local compute01
+192.168.255.133 compute02.local compute02
+</code></pre><p><img src="img/1720712699010.png" alt="1720712699010"></p>
+<p>3）设置SGE_ROOT环境变量，并生效。</p>
+<p><code>/opt/sge/bin/lx-amd64</code>目录现在还不存在，后边安装完SGE就有了</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/profile
+</code></pre><p>添加以下内容</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>export SGE_ROOT=/opt/sge
+export PATH=/opt/sge/bin/lx-amd64:$PATH
+</code></pre><p>激活环境变量</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre><p>4）安装epel源</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token parameter variable">-y</span> <span class="token function">install</span> epel-release
+</code></pre><p>5）安装依赖库</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token parameter variable">-y</span> <span class="token function">install</span> jemalloc-devel openssl-devel ncurses-devel pam-devel libXmu-devel hwloc-devel hwloc hwloc-libs java-devel javacc ant-junit libdb-devel motif-devel csh ksh xterm db4-utils perl-XML-Simple perl-Env xorg-x11-fonts-ISO8859-1-100dpi xorg-x11-fonts-ISO8859-1-75dpi
+</code></pre><p>6）添加sgeaddmin用户组和sgeadmin用户</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">groupadd</span> <span class="token parameter variable">-g</span> <span class="token number">490</span> sgeadmin
+<span class="token function">useradd</span> <span class="token parameter variable">-u</span> <span class="token number">495</span> <span class="token parameter variable">-g</span> <span class="token number">490</span> <span class="token parameter variable">-m</span> <span class="token parameter variable">-d</span> /home/sgeadmin <span class="token parameter variable">-s</span> /bin/bash <span class="token parameter variable">-c</span> <span class="token string">"SGE Admin"</span> sgeadmin
+</code></pre><p>7）下载编译SGE</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># wget https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/sge-8.1.9.tar.gz #这个链接已经失效了</span>
+<span class="token function">wget</span> https://master.dl.sourceforge.net/project/gridengine/SGE/releases/8.1.9/sge-8.1.9.tar.gz
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> sge-8.1.9.tar.gz
+<span class="token builtin class-name">cd</span> sge-8.1.9/source/
+<span class="token function">sh</span> scripts/bootstrap.sh <span class="token operator">&amp;&amp;</span> ./aimk <span class="token operator">&amp;&amp;</span> ./aimk <span class="token parameter variable">-man</span>
+<span class="token builtin class-name">echo</span> Y <span class="token operator">|</span> ./scripts/distinst <span class="token parameter variable">-local</span> <span class="token parameter variable">-allall</span> <span class="token parameter variable">-libs</span> <span class="token parameter variable">-noexit</span>
+<span class="token function">chown</span> <span class="token parameter variable">-R</span> sgeadmin.sgeadmin /opt/sge/
+</code></pre><p>8）安装SGE qmaster节点</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token builtin class-name">cd</span> <span class="token variable">$SGE_ROOT</span>
+./install_qmaster
+</code></pre><p>9）安装过程中大部分保持默认即可，到Adding Grid Engine hosts这一步时注意</p>
+<p><img src="img/1720710703583.png" alt="1720710703583"></p>
+<p>10）每次输入一个服务器的host，包括主控节点和计算节点；</p>
+<p>如果服务器比较多，跳到第<a href="#step14">14</a>步骤看</p>
+<p><img src="img/1720710717565.png" alt="1720710717565"></p>
+<p>11）每输完一个，然后按Enter键，又回到这个界面，输入下一个服务器的host</p>
+<p><img src="img/1720710733609.png" alt="1720710733609"></p>
+<p>12）继续添加其他主机</p>
+<p><img src="img/1720710749372.png" alt="1720710749372"></p>
+<p><img src="img/1720710773625.png" alt="1720710773625"></p>
+<p>13）所有的服务器的host输入完毕后，下次直接按Enter键，即结束host添加</p>
+<p><img src="img/1720710792591.png" alt="1720710792591"></p>
+<p><code>&lt;span id="step14"&gt;</code>14）如果服务器较多，一次次的输入很麻烦，我们可以提前将这些服务器的host写入到一个hostlist文件</p>
+<p>注意hostlist文件需要在当前$SGE_ROOT目录下</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> hostlist
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>qmaster.local
+qsubnode.local
+compute01.local
+compute02.local
+</code></pre><p>15）在Adding Grid Engine hosts这一步，输入y，然后按Enter键</p>
+<p><img src="img/1720710813620.png" alt="1720710813620"></p>
+<p>16）输入hostlist，然后按Enter键，完成添加。</p>
+<p><img src="img/1720710826450.png" alt="1720710826450"></p>
+<p>17）之后一致保持默认即可，完成SGE qmaster安装。</p>
+<p>18）修改@allhost组，删除原有的NONE，添加所有计算节点的host</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>qconf <span class="token parameter variable">-mhgrp</span> @allhosts
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>group_name @allhosts
+hostlist compute01.lcoal compute02.local
+</code></pre><p><img src="img/1720712885685.png" alt="1720712885685"></p>
+<p>19）开启任务调度信息收集</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /opt/sge/default/common/sched_configuration
+</code></pre><p>修改 <code>schedd_job_info</code> 后边为 <code>true</code></p>
+<p><img src="img/1720710919192.png" alt="1720710919192"></p>
+<p><s>20）如果在qmaster上安装执行程序，让qmaster也可以提供计算服务，保持默认选项安装。不建议这样做</s></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>./install_execd
+<span class="token function">cp</span> /opt/sge/default/common/settings.sh /etc/profile.d/
+<span class="token function">cp</span> /opt/sge/default/common/settings.csh /etc/profile.d/
+<span class="token builtin class-name">source</span> /etc/profile.d/settings.sh
+</code></pre><p><s>21）添加投递节点，将qmaster节点设置为任务投递节点</s></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>qconf <span class="token parameter variable">-as</span> qmaster.local
+</code></pre><h3 id="42-执行节点安装compute-01">4.2 执行节点安装（compute-01) </h3>
+<p>1）安装依赖库</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>yum <span class="token parameter variable">-y</span> <span class="token function">install</span> hwloc-devel
+</code></pre><p>2）修改hostname</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>hostnamectl set-hostname compute01.local
+</code></pre><p>3）修改host文件，添加主控节点和计算节点信息。也可将master上hosts文件复制，参考scp命令</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/hosts
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>192.168.255.131 qmaster.local qmaster
+192.168.255.132 qsubnode.local qsubnode
+192.168.255.130 compute01.lcoal compute01
+192.168.255.130 compute02.local compute02
+</code></pre><p>4）添加 <code>sgeadmin</code>用户组，添加 <code>sgeadmin</code>用户</p>
+<p><strong>注意sgeadmin的uid与gid必须与master上的保持一致</strong></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">groupadd</span> <span class="token parameter variable">-g</span> <span class="token number">490</span> sgeadmin
+<span class="token function">useradd</span> <span class="token parameter variable">-u</span> <span class="token number">495</span> <span class="token parameter variable">-g</span> <span class="token number">490</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-s</span> /bin/bash <span class="token parameter variable">-c</span> <span class="token string">"SGE Admin"</span> sgeadmin
+</code></pre><p>5）添加 <code>SGE_ROOT</code>环境变量</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> /etc/profile
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>export SGE_ROOT=/opt/sge
+export PATH=/opt/sge/bin/lx-amd64:$PATH
+</code></pre><p>使环境变量生效</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre><p>6）安装计算节点</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token builtin class-name">cd</span> <span class="token variable">$SGE_ROOT</span>
+./install_execd
+<span class="token function">cp</span> /opt/sge/default/common/settings.sh /etc/profile.d/
+<span class="token function">cp</span> /opt/sge/default/common/settings.csh /etc/profile.d/
+<span class="token builtin class-name">source</span> /etc/profile.d/settings.sh
+</code></pre><p>7）运行 <code>qhost</code>命令，我们就能成功看到compute01及其信息在队列中，说明安装成功</p>
+<p><img src="img/1720713165146.png" alt="1720713165146"></p>
+<h3 id="43-其他执行节点">4.3 其他执行节点 </h3>
+<p>（compute-02）安装配置，参考compute-01的安装配置过程。</p>
+<h3 id="44-投递节点">4.4 投递节点 </h3>
+<p>投递节点参考执行节点进行安装，不再叙述。</p>
+<h3 id="45-qmon设置">4.5 qmon设置 </h3>
+<ul>
+<li>命令行输入 <code>qmon</code>命令，就可以打开qmon图形界面<br>
+<img src="img/1720685588960.png" alt="1720685588960"></li>
+<li>选择“Host Configuration”，在其中设置管理节点、投递节点、执行节点<br>
+<img src="img/1720685520866.png" alt="1720685520866"><br>
+<img src="img/1720685623477.png" alt="1720685623477"></li>
+<li>“Cluster Queues”选项中，可以设置all.q队列是否包含投递节点<br>
+<img src="img/1720685758886.png" alt="1720685758886"></li>
+</ul>
+<h2 id="5-测试">5 测试 </h2>
+<p>1）在master上新建一个普通用户，投递任务进行测试</p>
+<p>新建用户test，并设置密码</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">useradd</span> <span class="token parameter variable">-m</span> <span class="token builtin class-name">test</span>
+<span class="token function">passwd</span> <span class="token builtin class-name">test</span>
+</code></pre><p>2）更新NIS数据库</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">make</span> <span class="token parameter variable">-C</span> /var/yp
+<span class="token function">make</span> <span class="token parameter variable">-C</span> /var/yp <span class="token function">passwd</span>
+</code></pre><p>3）登陆test用户</p>
+<p>4）测试一下集群是否能正常工作</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">vi</span> test.csh
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>#!/bin/bash
+#$ -cwd
+#$ -S  /bin/bash
+#$ -l h_vmem=1G
+#$ -j  y
+#$ -V
+#$ -q all.q
+uname -a &gt;test.txt
+</code></pre><pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>qsub test.csh
+</code></pre><p>如果出现错误无法分配内存，是因为计算节点的内存太小了。</p>
+<h2 id="6-讨论">6 讨论 </h2>
+<ul>
+<li>系统安装过程，可根据自己的实际情况进行相应变化。</li>
+<li>在虚拟机中大多数命令不容易复制，建议安装完系统后，用ssh登陆软件进行操作</li>
+<li>防火墙会影响服务的运行，确保防火墙关闭。用 <code>systemctl status service_name</code>可查看服务运行状态</li>
+<li>多个文件在不同服务器上是重复的，可用 <code>scp</code>复制过去</li>
+<li>master节点是否该分配到执行节点？建议不要这么做，以免系统压力过大，造成集群瘫痪</li>
+<li>qmon在图形界面配置集群较为方便。qmon如果启动不了，基本上是字体库的问题，查看字体库是否安装。参考资料中存在错误</li>
+<li>真的在机房部署SGE，可能需要考虑更多的问题，尤其是防火墙。（为了更为方便的安装部署，我把防火墙关闭了）</li>
+<li>为了简化教程，还有好多知识点我没有提及。建议自己搜索学习</li>
+<li>如有其他问题，欢迎一起讨论！</li>
+</ul>
+<h2 id="7-参考资料">7 参考资料 </h2>
+<p><a href="https://github.com/wangkaisine/SGE-On-CentOS">https://github.com/wangkaisine/SGE-On-CentOS</a></p>
+<p><a href="https://blog.csdn.net/wuxianfeng1987/article/details/72874905?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-5.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-5.control">https://blog.csdn.net/wuxianfeng1987/article/details/72874905?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-5.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-5.control</a></p>
+<p><a href="http://www.zxzyl.com/archives/1057">http://www.zxzyl.com/archives/1057</a></p>
+<p><a href="https://blog.csdn.net/qq_41959899/article/details/105948440">https://blog.csdn.net/qq_41959899/article/details/105948440</a></p>
+<p><a href="https://www.cnblogs.com/zhushuaishuai/p/10843379.html">https://www.cnblogs.com/zhushuaishuai/p/10843379.html</a></p>
+
+      </div>
+      <div class="md-sidebar-toc">
+<div class="md-toc">
+<details style="padding:0;;padding-left:0px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#sge安装部署完整过程-基于centos7" class="md-toc-link"><p>SGE安装部署完整过程-基于CentOS7</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#前言" class="md-toc-link">
+            <p>前言</p>
+
+          </a></div><details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#1-系统安装" class="md-toc-link"><p>1 系统安装</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#11-安装控制节点" class="md-toc-link">
+            <p>1.1 安装控制节点</p>
+
+          </a></div><details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#12-安装计算节点" class="md-toc-link"><p>1.2 安装计算节点</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#121-安装计算节点-01" class="md-toc-link">
+            <p>1.2.1 安装计算节点-01</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#122-安装计算节点-02" class="md-toc-link">
+            <p>1.2.2 安装计算节点-02</p>
+
+          </a></div>
+        </div>
+      </details>
+    <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#13-安装投递节点" class="md-toc-link">
+            <p>1.3 安装投递节点</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#14-修改yum源" class="md-toc-link">
+            <p>1.4 修改yum源</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#2-nfs共享存储" class="md-toc-link"><p>2 NFS共享存储</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#21-server端master" class="md-toc-link">
+            <p>2.1&nbsp;Server端（master）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#22-客户端compute-01" class="md-toc-link">
+            <p>2.2 客户端（compute-01）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#24-投递节点" class="md-toc-link">
+            <p>2.4 投递节点</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#3-nisnetwork-information-service安装部署" class="md-toc-link"><p>3 NIS(Network Information Service)安装部署</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#31-server端master" class="md-toc-link">
+            <p>3.1 Server端（master）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#32-客户端compute-01" class="md-toc-link">
+            <p>3.2 客户端（compute-01)</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#33-投递节点" class="md-toc-link">
+            <p>3.3 投递节点</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#4-sge-cluster" class="md-toc-link"><p>4 SGE Cluster</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#41-主控节点安装qmaster" class="md-toc-link">
+            <p>4.1 主控节点安装（qmaster）</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#42-执行节点安装compute-01" class="md-toc-link">
+            <p>4.2 执行节点安装（compute-01)</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#43-其他执行节点" class="md-toc-link">
+            <p>4.3 其他执行节点</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#44-投递节点" class="md-toc-link">
+            <p>4.4 投递节点</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#45-qmon设置" class="md-toc-link">
+            <p>4.5 qmon设置</p>
+
+          </a></div>
+        </div>
+      </details>
+    <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#5-测试" class="md-toc-link">
+            <p>5 测试</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#6-讨论" class="md-toc-link">
+            <p>6 讨论</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#7-参考资料" class="md-toc-link">
+            <p>7 参考资料</p>
+
+          </a></div>
+        </div>
+      </details>
+    
+</div>
+</div>
+      <a id="sidebar-toc-btn">≡</a>
+    
+    
+    
+    
+    
+    
+<script>
+document.body.setAttribute('html-show-sidebar-toc', true)
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  
+    </body></html>
