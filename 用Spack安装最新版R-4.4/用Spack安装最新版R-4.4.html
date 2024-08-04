@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///c:\Users\GYH\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.13\crossnote\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///c:\Users\guo12\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.13\crossnote\dependencies\katex\katex.min.css">
       
       
       
@@ -24,9 +24,67 @@
     
       <div class="crossnote markdown-preview  ">
       
+<div class="md-toc">
+<div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#前言" class="md-toc-link">
+            <p>前言</p>
+
+          </a></div><details style="padding:0;;padding-left:0px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#正文" class="md-toc-link"><p>正文</p>
+</a>
+          </summary>
+        <div>
+          <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#一-安装最新版gcc" class="md-toc-link"><p>一、安装最新版gcc</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#1首先查看当前最新版gcc版本" class="md-toc-link">
+            <p>1.首先查看当前最新版gcc版本</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#2安装gcc-1410" class="md-toc-link">
+            <p>2.安装<code>gcc 14.1.0</code></p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#3更新spack编译器" class="md-toc-link">
+            <p>3.更新Spack编译器</p>
+
+          </a></div>
+        </div>
+      </details>
+    <details style="padding:0;;padding-left:24px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#二-安装新版r" class="md-toc-link"><p>二、安装新版R</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#1安装r-440" class="md-toc-link">
+            <p>1.安装<code>R 4.4.0</code></p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#2解决无法下载的问题" class="md-toc-link">
+            <p>2.解决无法下载的问题</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#3加载r" class="md-toc-link">
+            <p>3.加载R</p>
+
+          </a></div>
+        </div>
+      </details>
+    
+        </div>
+      </details>
+    
+</div>
 <h2 id="前言">前言 </h2>
 <p>之前的博客中，我介绍了怎么<a href="http://t.csdnimg.cn/Dvot4">安装Spack和EnvironmentModules，两者搭配，可以轻松解决环境依赖的问题</a>。</p>
-<p>最近，实验室有人需要用最新版R，我安装的时候又遇到的依赖不兼容的问题。<br>
+<p>最近，实验室有同学需要用最新版<code>R</code>，我安装的过程中又遇到依赖包不兼容的问题。经过一番折腾，终于弄明白了。<br>
 在这里，我以安装最新版<code>R 4.4.0</code>为例，进一步讲解为什么会出现依赖不兼容的问题。</p>
 <h2 id="正文">正文 </h2>
 <h3 id="一-安装最新版gcc">一、安装最新版gcc </h3>
@@ -42,9 +100,9 @@
 <pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>spack <span class="token function">install</span> <span class="token parameter variable">-j</span> <span class="token number">4</span> <span class="token parameter variable">--fresh</span> gcc@14.1.0
 </code></pre><p><img src="img/1722754721674.png" alt="1722754721674"></p>
 <p>观察输出的这些内容，可以看到前几项依赖是已经有的，Spack就不会再安装了。而且，注意，这几项依赖包是由<code>gcc 11.4.0</code>编译的，并且我的系统里只安装了<code>gcc 11.4.0</code>。</p>
-<p>如果遇到无法下载的问题，参考2.3说明。（因为在这步我确实没有遇到问题）</p>
+<p>如果遇到无法下载的问题，参考<a href="#2%E8%A7%A3%E5%86%B3%E6%97%A0%E6%B3%95%E4%B8%8B%E8%BD%BD%E7%9A%84%E9%97%AE%E9%A2%98">2.2</a>说明。（因为在这步我确实没有遇到问题）</p>
 <h4 id="3更新spack编译器">3.更新Spack编译器 </h4>
-<p>将刚安装的<code>gcc 14.1.0</code>添加到Spack的编译器</p>
+<p>将刚安装的<code>gcc 14.1.0</code>添加到Spack的编译器列表中</p>
 <pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 版本最后的hash值因人而异，用TAB键自动补全</span>
 module load gcc/14.1.0-gcc-11.4.0-ctwe2zd
 
@@ -81,10 +139,11 @@ module purge <span class="token comment"># 等效于 unload 所有软件</span>
 </code></pre><p>这下终于装好了：</p>
 <p><img src="img/1722767022649.png" alt="1722767022649"></p>
 <h4 id="3加载r">3.加载R </h4>
-<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>module load r/4.4.0-
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>module load r/4.4.0-gcc-14.1.0-emrr2pb
 R
-</code></pre><p>完美手工：</p>
+</code></pre><p>完美收工：</p>
 <p><img src="img/1722767105479.png" alt="1722767105479"></p>
+<p>用到的所有离线镜像包我打包放到了评论区。</p>
 
       </div>
       <div class="md-sidebar-toc">
@@ -155,7 +214,7 @@ R
     
     
 <script>
-
+document.body.setAttribute('html-show-sidebar-toc', true)
 var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
 sidebarTOCBtn.addEventListener('click', function(event) {
   event.stopPropagation()

@@ -1,7 +1,19 @@
-## 前言
-之前的博客中，我介绍了怎么[安装Spack和EnvironmentModules，两者搭配，可以轻松解决环境依赖的问题]( http://t.csdnimg.cn/Dvot4)。
+---
+html:
+    toc: true
+    # number_sections: true # 标题开头加上编号
+    toc_depth: 6
+    toc_float:
+        collapsed: false # 控制文档第一次打开时目录是否被折叠
+        smooth_scroll: true # 控制页面滚动时，标题是否会随之变化
+---
 
-最近，实验室有人需要用最新版R，我安装的时候又遇到的依赖不兼容的问题。
+[TOC]
+
+## 前言
+之前的博客中，我介绍了怎么[安装Spack和EnvironmentModules，两者搭配，可以轻松解决环境依赖的问题](http://t.csdnimg.cn/Dvot4)。
+
+最近，实验室有同学需要用最新版`R`，我安装的过程中又遇到依赖包不兼容的问题。经过一番折腾，终于弄明白了。
 在这里，我以安装最新版`R 4.4.0`为例，进一步讲解为什么会出现依赖不兼容的问题。
 
 ## 正文
@@ -30,11 +42,11 @@ spack install -j 4 --fresh gcc@14.1.0
 
 观察输出的这些内容，可以看到前几项依赖是已经有的，Spack就不会再安装了。而且，注意，这几项依赖包是由`gcc 11.4.0`编译的，并且我的系统里只安装了`gcc 11.4.0`。
 
-如果遇到无法下载的问题，参考2.3说明。（因为在这步我确实没有遇到问题）
+如果遇到无法下载的问题，参考[2.2](#2解决无法下载的问题)说明。（因为在这步我确实没有遇到问题）
 
 #### 3.更新Spack编译器
 
-将刚安装的`gcc 14.1.0`添加到Spack的编译器
+将刚安装的`gcc 14.1.0`添加到Spack的编译器列表中
 
 ```bash
 # 版本最后的hash值因人而异，用TAB键自动补全
@@ -54,7 +66,9 @@ module purge # 等效于 unload 所有软件
 ```bash
 spack install -j 4 --fresh r@4.4.0 %gcc@14.1.0
 ```
+
 参数说明：
+
 - `-j 4`：允许多线程安装。
 - `--fresh`：不重用已有的依赖。
 - `r@4.4.0`：`@`后跟版本号，指定安装的版本。
@@ -66,6 +80,7 @@ spack install -j 4 --fresh r@4.4.0 %gcc@14.1.0
 可以看到，这次安装没有使用已存在的依赖，都是安装的最新依赖。而且时间很长。
 
 #### 2.解决无法下载的问题
+
 如果遇到无法下载的包，像`jdk`这种需要License的包或者一些在`github`上的包，在合适的网络环境重新安装，或者，参考[手动安装](https://spack.readthedocs.io/en/latest/basic_usage.html#non-downloadable-tarballs)和[离线镜像安装](https://spack.readthedocs.io/en/latest/mirrors.html#mirrors)。
 
 我在安装的时候就遇到了pcre2不能下载的问题。（明明其它的github的包都能正常下载）
@@ -101,9 +116,12 @@ spack install -j 4 --fresh r@4.4.0 %gcc@14.1.0
 
 #### 3.加载R
 ```bash
-module load r/4.4.0-
+module load r/4.4.0-gcc-14.1.0-emrr2pb
 R
 ```
-完美手工：
+
+完美收工：
 
 ![1722767105479](img/1722767105479.png)
+
+用到的所有离线镜像包我打包放到了评论区。
