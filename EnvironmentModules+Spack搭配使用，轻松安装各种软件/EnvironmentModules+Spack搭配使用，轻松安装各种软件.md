@@ -170,7 +170,7 @@ source /usr/local/Modules/init/bash # 可以添加到 ~/.bashrc实现登录自�
 
 ```bash
 # linux-ubuntu22.04-skylake这个目录因人而异，改成你自己实际的目录
-module use $HOME/software/spack/share/spack/modules/linux-ubuntu22.04-skylake/
+module use --append $HOME/software/spack/share/spack/modules/linux-ubuntu22.04-skylake/
 ```
 
 # 三、结果
