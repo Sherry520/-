@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///c:\Users\GYH\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.13\crossnote\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///c:\Users\GYH\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.15\crossnote\dependencies\katex\katex.min.css">
       
       
       
@@ -39,21 +39,24 @@
 
           </a></div>
 </div>
+<br>
+<strong>教程更新日志：</strong><br>
+2025.1.5：更新小版本号的内容；<p></p>
 <p>如果你在Centos系统上使用<code>yum install</code>安装软件，出现了网络连接失败之类的错误，是因为Centos已经停止了维护，默认的安装源也已经失效。</p>
 <p>如果你也换源了，但是可能查的是比较旧的内容，那些内容也已经不适用了。</p>
 <p>现在的解决办法是需要更换为Vault源。</p>
 <h2 id="1检查你当前系统的小版本">1.检查你当前系统的小版本 </h2>
 <pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>lsb_release <span class="token parameter variable">-a</span>
-</code></pre><p>结果类似这样，则小版本号是7.5</p>
+</code></pre><p>结果类似这样，则小版本号是7.5.1804</p>
 <p><img src="img/1723444717760.png" alt="1723444717760"></p>
 <h2 id="2更换镜像">2.更换镜像 </h2>
 <p>这里我们选择用清华vault镜像，其它国内的vault镜像基本大同小异。<br>
 打开<a href="https://mirrors.tuna.tsinghua.edu.cn/help/centos-vault/">清华镜像</a>的网页<a href="https://mirrors.tuna.tsinghua.edu.cn/help/centos-vault/">https://mirrors.tuna.tsinghua.edu.cn/help/centos-vault/</a></p>
 <p>默认网页内容如下：</p>
 <p><img src="img/1723444633529.png" alt="1723444633529"></p>
-<p>修改其中的数字为在第一步得到的结果，<strong>注意是小版本号</strong>，这里比如说是7.5,<br>
-注意到末尾的数字也变了</p>
-<p><img src="img/1723444668142.png" alt="1723444668142"></p>
+<p>修改其中的数字为在第一步得到的结果，<strong>注意是小版本号</strong>，这里比如说是<s>7.5</s>7.5.1804,具体可参考<a href="https://mirrors.tuna.tsinghua.edu.cn/centos-vault/">清华centos-vault镜像地址</a>来对应。<br>
+输入后按回车键，注意到末尾的数字也变了</p>
+<p><img src="img/1736085391872.png" alt="1736085391872"></p>
 <h2 id="3修改镜像源">3.修改镜像源 </h2>
 <p>粘贴上面的内容，到你的Centos的终端（Terminal）中，并执行，就会自动替换成清华的镜像。</p>
 <p>修改后的源文件内容大致如下：</p>
